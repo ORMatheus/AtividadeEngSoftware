@@ -1,1 +1,79 @@
 implementação do iterator com base no https://refactoring.guru/pt-br/design-patterns/iterator
+
+
+#include <iostream>
+#include <vector>
+
+// Interface Iterator
+class Iterator {
+public:
+    virtual bool hasNext() const = 0;
+    virtual int next() = 0;
+    virtual int current() const = 0;
+    virtual ~Iterator() = default;
+};
+
+// Classe Iterator para o vetor
+class VectorIterator : public Iterator {
+private:
+    const std::vector<int>& vec;
+    size_t currentIndex;
+
+public:
+    VectorIterator(const std::vector<int>& v) : vec(v), currentIndex(0) {}
+
+    bool hasNext() const override {
+        return currentIndex < vec.size();
+    }
+
+    int next() override {
+        return vec[currentIndex++];
+    }
+
+    int current() const override {
+        if (currentIndex < vec.size()) {
+            return vec[currentIndex];
+        } else {
+            throw std::out_of_range("Iterator out of range");
+        }
+    }
+};
+
+// Classe Iterable para encapsular o vetor
+class VectorIterable {
+private:
+    std::vector<int> vec;
+
+public:
+    VectorIterable(int n) : vec(n, 0) {}
+
+    // Criar um iterador para o vetor
+    VectorIterator createIterator() const {
+        return VectorIterator(vec);
+    }
+
+    void setValue(int index, int value) {
+        if (index >= 0 && index < vec.size()) {
+            vec[index] = value;
+        } else {
+            std::cerr << "Índice inválido!" << std::endl;
+        }
+    }
+};
+
+int main() {
+    std::cout << "Digite o tamanho do vetor: ";
+    int n;
+    std::cin >> n;
+
+    VectorIterable iterable(n);
+    iterable.setValue(2, 42);
+
+    VectorIterator iterator = iterable.createIterator();
+    while (iterator.hasNext()) {
+        std::cout << iterator.next() << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
