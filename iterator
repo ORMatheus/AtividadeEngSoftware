@@ -1,4 +1,20 @@
 implementação do iterator com base no https://refactoring.guru/pt-br/design-patterns/iterator
++------------------+           +-------------------+
+|     Iterable     |<>-------->|     Iterator      |
++------------------+           +-------------------+
+| + createIterator()|          | + hasNext()       |
++------------------+           | + next()          |
+                               | + current()       |
+                               +-------------------+
+                                     ^
+                                     |
+                       +-------------+-------------+
+                       |                           |
+           +--------------------+        +--------------------+
+           |   VectorIterable   |        |   VectorIterator   |
+           +--------------------+        +--------------------+
+           | - vector<int> vec  |        | - currentIndex     |
+           +--------------------+        +--------------------+
 
 
 #include <iostream>
