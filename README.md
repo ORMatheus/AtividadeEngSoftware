@@ -1,9 +1,41 @@
 # AtividadeEngSoftware
 aplicação dos padrões de projeto.
 
-O Builder é útil para construir objetos complexos, mas neste caso também pode ser usado para encapsular a lógica de construção da lista sequencial com configurações adicionais.
+# Builder Pattern Example
 
-Essa abordagem encapsula o processo de criação do objeto e permite a adição futura de configurações mais complexas sem modificar diretamente a classe ListaSequencial.
+## Problema Resolvido
+O padrão Builder resolve o problema de criar objetos complexos com múltiplas opções de configuração. Ele evita:
+1. Construtores longos e difíceis de entender.
+2. Necessidade de configurar o objeto diretamente após a criação, tornando o código mais limpo e seguro.
+
+## Estrutura
+Este exemplo cria um vetor configurável com as seguintes etapas:
+1. **Definir o tamanho do vetor**.
+2. **Definir o valor inicial de todos os elementos**.
+3. **Construir o vetor final** usando o Builder.
+
+### Diagrama UML
++------------------+           +--------------------+
+|     Builder      |<>-------->|    Product         |
++------------------+           +--------------------+
+| + setSize()      |           | + vector<int> vec  |
+| + setInitialVal()|           |                    |
+| + build()        |           |                    |
++------------------+           +--------------------+
+         ^
+         |
++-------------------+
+| VectorBuilder     |
++-------------------+
+| - size            |
+| - initialVal      |
++-------------------+
+
+
+## Como Executar
+1. Compile o código:
+   ```bash
+   g++ builder.cpp -o builder
 
 # Adapter Pattern Example
 
@@ -20,7 +52,14 @@ O código original criava e manipulava um vetor utilizando alocação dinâmica 
 - Métodos para exibição (`printVector`).
 
 ### Diagrama UML
-![Diagrama UML](uml_diagram.png)
++------------------+       +------------------+
+|  VectorAdapter   |       |     Client       |
++------------------+       +------------------+
+| + createVector() |<----> | - Uses Vector    |
+| + printVector()  |       |                  |
+| + destructor     |       +------------------+
++------------------+       
+
 
 ## Como Executar
 1. Compile o código:
@@ -43,7 +82,23 @@ A implementação substitui o acesso direto ao vetor por um iterador, que:
 3. Melhora a modularidade e segurança do código.
 
 ### Diagrama UML
-![Diagrama UML](uml_diagram.png)
++------------------+           +-------------------+
+|     Iterable     |<>-------->|     Iterator      |
++------------------+           +-------------------+
+| + createIterator()|          | + hasNext()       |
++------------------+           | + next()          |
+                               | + current()       |
+                               +-------------------+
+                                     ^
+                                     |
+                       +-------------+-------------+
+                       |                           |
+           +--------------------+        +--------------------+
+           |   VectorIterable   |        |   VectorIterator   |
+           +--------------------+        +--------------------+
+           | - vector<int> vec  |        | - currentIndex     |
+           +--------------------+        +--------------------+
+
 
 ## Como Executar
 1. Compile o código:
