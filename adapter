@@ -1,5 +1,12 @@
 codigo realizado com base https://refactoring.guru/design-patterns/adapter
 
++------------------+       +------------------+
+|  VectorAdapter   |       |     Client       |
++------------------+       +------------------+
+| + createVector() |<----> | - Uses Vector    |
+| + printVector()  |       |                  |
+| + destructor     |       +------------------+
++------------------+       
 
 
 
