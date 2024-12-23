@@ -1,2 +1,56 @@
 O diagrama representa como o padrão Adapter é usado para criar uma interface entre o vetor baseado em C e a classe que encapsula sua manipulação:
 O padrão Adapter é usado para converter a interface de uma classe em outra que os clientes esperam. Nesse caso, encapsulamos o vetor C dentro de uma classe que fornece uma interface mais moderna e segura. Isso facilita a manipulação de vetores, tornando o código mais robusto e alinhado a práticas modernas.
+
+
+
+
+#include <iostream>
+#include <vector>
+
+class VectorAdapter {
+private:
+    std::vector<int> vec;
+
+public:
+    VectorAdapter(int n) {
+        vec = std::vector<int>(n, 0);
+    }
+
+    void printVector() const {
+        for (int num : vec) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    // Função adicional para facilitar a manipulação
+    void setValue(int index, int value) {
+        if (index >= 0 && index < vec.size()) {
+            vec[index] = value;
+        } else {
+            std::cerr << "Índice inválido!" << std::endl;
+        }
+    }
+
+    ~VectorAdapter() {
+        // Recursos são liberados automaticamente pela std::vector
+        std::cout << "Vector liberado!" << std::endl;
+    }
+};
+
+int main() {
+    std::cout << "Digite o tamanho do vetor: ";
+    int n;
+    std::cin >> n;
+
+    VectorAdapter vectorAdapter(n);
+
+    vectorAdapter.printVector();
+
+    // Testando função adicional
+    vectorAdapter.setValue(2, 42);
+    vectorAdapter.printVector();
+
+    return 0;
+}
+
